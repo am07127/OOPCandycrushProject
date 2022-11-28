@@ -1,5 +1,12 @@
 #include "game.hpp"
-#include "pigeon.hpp"
+#include "Candycrush.hpp"
+#include "popupwindow.hpp"
+
+
+bool flag=false;
+
+
+using namespace std;
 bool Game::init()
 {
 	//Initialization flag
@@ -20,7 +27,7 @@ bool Game::init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow( "HU Life", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "HU Mania", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -47,6 +54,7 @@ bool Game::init()
 					printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
 					success = false;
 				}
+
 			}
 		}
 	}
@@ -59,19 +67,20 @@ bool Game::loadMedia()
 	//Loading success flag
 	bool success = true;
 	
-	assets = loadTexture("assets.png");
+	assets = loadTexture("projectcandies.png");
+	assets2 = loadTexture("pngfind.com-explosions-png-32584.png");
     gTexture = loadTexture("hu.png");
 	if(assets==NULL || gTexture==NULL)
     {
         printf("Unable to run due to error: %s\n",SDL_GetError());
         success =false;
     }
-
 	return success;
 }
 
 void Game::close()
 {
+	quitgrid();
 	//Free loaded images
 	SDL_DestroyTexture(assets);
 	assets=NULL;
@@ -82,7 +91,6 @@ void Game::close()
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
 	gRenderer = NULL;
-
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
@@ -114,63 +122,71 @@ SDL_Texture* Game::loadTexture( std::string path )
 
 	return newTexture;
 }
+
+gamelogic *gamelogic::instance=0;
+
 void Game::run( )
 {
-    SDL_RenderClear( gRenderer );
-	//Main loop flag
 	bool quit = false;
-
-	//Event handler
 	SDL_Event e;
-	Pigeon pigeons[10];
-	for (int i=0;i<10;i++){
-		pigeons[i].mover.x = rand() % 700;
-		pigeons[i].mover.y = rand() % 500;
-		pigeons[i].assets = assets;
-	}
-	
-
-	//While application is running
+	initialize();
+    pos* p1 = new pos();
+	gamelogic* p2 = p2->getinstance();
+	//flag* p2 = new flag();
+	time_t start = time(0);
+	int timeleft = 2000;
 	while( !quit )
 	{
+		if(timeleft<0){
+			popupwindow* aya = new popupwindow();
+			if(p2->getscore()<50 || p2->getmove()<=0){
+                aya->makewindow(false);
+			}else{
+				aya->makewindow(true);
+			}
+			break;
+		}
 		//Handle events on queue
 		while( SDL_PollEvent( &e ) != 0 )
 		{
+			match(flag, p2, gRenderer, assets);
+			flag=true;
 			//User requests quit
 			if( e.type == SDL_QUIT )
 			{
 				quit = true;
 			}
 
-			if( e.type == SDL_MOUSEBUTTONDOWN){
-				if(e.button.button == SDL_BUTTON_LEFT){
-					//this is a good location to add pigeon in linked list.
-					int xMouse, yMouse;
-					SDL_GetMouseState(&xMouse,&yMouse);
-					std::cout<<"Left button pressed at : x = "<<xMouse<<" , y = "<<yMouse<<std::endl;
-				}
-
-				
-			
-				else if(e.button.button == SDL_BUTTON_RIGHT){
-					//this is a good location to remove last pigeon from linked list.
-					int xMouse, yMouse;
-					SDL_GetMouseState(&xMouse,&yMouse);
-					std::cout<<"Right button pressed at : x = "<<xMouse<<" , y = "<<yMouse<<std::endl;
-				}
-
-				
+			if(e.type == SDL_MOUSEBUTTONDOWN){
+			//this is a good location to add pigeon in linked list.
+				int xMouse, yMouse;
+				SDL_GetMouseState(&xMouse,&yMouse);
+				if(e.button.button == SDL_BUTTON_LEFT)
+					p1->set_pos(xMouse,yMouse);
+				else if(e.button.button == SDL_BUTTON_RIGHT)
+					swap(xMouse, yMouse,p1->get_x(),p1->get_y());
+					if(flag==true){
+						cout<<p2->getscore()<<endl;
+						cout<<p2->getmove()<<endl;
+						--(*p2);
+					}
 			}
-			
-			// update();	
 		}
+
+		
 		SDL_RenderClear(gRenderer); //removes everything from renderer
-		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
-		//draw the objects here
-		for(int i=0;i<10;i++)
-			pigeons[i].draw(gRenderer);	//draws object on renderer
+		//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
+		//***********************draw the objects here********************
+
+		drawBlocks(gRenderer, assets);
+
+		//****************************************************************
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
+
 	    SDL_Delay(200);	//causes sdl engine to delay for specified miliseconds
+		time_t end       = time(0);
+        time_t timeTaken = end-start;        // Total time taken so Far.
+        timeleft = timeleft - timeTaken;
 	}
-			
+	
 }
