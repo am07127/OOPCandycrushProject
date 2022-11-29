@@ -28,6 +28,12 @@ SDL_Texture* LoadTexture( std::string path, SDL_Renderer * renderer )
 }
 
 int popupwindow :: makewindow(bool x){
+    if(x==false){
+        z->losesound();
+    }else{
+        z->winsound();
+    }
+	
     bool quit = false;
     SDL_Event e;
  

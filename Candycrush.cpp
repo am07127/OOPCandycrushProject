@@ -5,84 +5,17 @@
 #include <cmath>
 
 
+
 using namespace std;
 const int width = 1000, height = 600;
-class Candy{
-    public:
-    SDL_Rect srcrect;
-    string type;
-    //static bool flag;
-    //static int count;
-    Candy(){
+const int rows = 10, cols = 10;
+int box_width = width/cols;
+int box_height = height/rows;
 
-    }
-     /*
-     void crush(SDL_Renderer* renderer, SDL_Texture* texture, int row, int col){
-        int xbox = width/col;
-        int ybox = height/row;
-        SDL_Rect mov = { xbox*col, ybox*row, xbox - 10, ybox - 10};
-        SDL_RenderClear(renderer);
-        for(int i=0;i<10;i++){
-            if(i==0){
-                srcrect={67,23,86,90};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated render
-                 SDL_Delay(5);
-            }else if(i==1){
-                srcrect={319,16,89,97};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated renderer
-                 SDL_Delay(5);
-            }else if(i==2){
-                srcrect={574,16,92,104};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated renderer
-                 SDL_Delay(5);
-            }else if(i==3){
-                srcrect={827,15,98,110};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated renderer
-                 SDL_Delay(5);
-            }else if(i==4){
-                srcrect={1079,12,107,114};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated renderer
-                 SDL_Delay(5);
-            }else if(i==5){
-                srcrect={41,257,133,133};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated renderer
-                 SDL_Delay(5);
-            }else if(i==6){
-                srcrect={294,255,139,137};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated renderer
-                 SDL_Delay(5);
-            }else if(i==7){
-                srcrect={547,254,145,142};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated renderer
-                 SDL_Delay(5);
-            }else if(i==8){
-                srcrect={799,252,152,147};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated rendere
-                 SDL_Delay(5);
-            }else if(i==9){
-                srcrect={1052,249,157,152};
-                SDL_RenderCopy(renderer, texture, &srcrect, &mov);
-                SDL_RenderPresent(renderer); //displays the updated renderer
-                 SDL_Delay(5);
-            }
-        }
-        */
-        virtual void crush(){
-           srcrect={401,189,128,128};
-    }
-    
-};
+
 
 class blue:public Candy{
+sound* z = new sound();
 public:
     blue(){  //constructor
         srcrect={-1,-1,128,128};
@@ -91,11 +24,16 @@ public:
     
     void crush(){
         srcrect={428,1,74,128};
+        z->playsound1();
+    }
+    ~blue(){
+        delete z;
     }
     
 };
 
 class Pink:public Candy{
+    sound* z = new sound();
     public:
     Pink(){
         srcrect={201,189,128,128};
@@ -104,10 +42,15 @@ class Pink:public Candy{
     
     void crush(){
         srcrect={1,189,128,128};
+        z->playsound2();
+    }
+    ~Pink(){
+        delete z;
     }
     
 };
 class Fish:public Candy{
+    sound* z = new sound();
     public:
     Fish(){
         srcrect={401,377,128,128};
@@ -116,11 +59,16 @@ class Fish:public Candy{
     
     void crush(){
         srcrect={220,377,90,128};
+        z->playsound3();
+    }
+    ~Fish(){
+        delete z;
     }
     
 };
 
 class egg:public Candy{
+    sound* z = new sound();
     public:
     egg(){
         srcrect={201,1,128,128};
@@ -129,26 +77,17 @@ class egg:public Candy{
     
     void crush(){
         srcrect={1,377,128,128};
+        z->playsound4();
     }
-    
+    ~egg(){
+        delete z;
+    }
 };
 
 // Currently rows and columns are set to 8, however your game implementation should work for any other number
-const int rows = 10, cols = 10;
 
 // grid will store characters matrix of rows*cols size, you have to allocate memory to it in initialize function below
 Candy** grid = NULL;
-
-//int Candy :: count = 0;
-//bool Candy :: flag = false;
-// *****************************************************************************************************
-// No change zone: Don't change anything until the next stars line
-// *****************************************************************************************************
-
-// Don't Change it: Screen width and height values
-
-int box_width = width/cols;
-int box_height = height/rows;
 
 // Don't Change: This function is dealing with SDL and currently it's complete. Don't change anything here
 void drawOneBlock(SDL_Renderer* renderer, SDL_Texture* texture, int row, int col, Candy* sym){
@@ -173,23 +112,7 @@ void drawBlocks(SDL_Renderer* renderer, SDL_Texture* texture){
 }
 
 
-
-void pos :: set_pos(int X,int Y){
-        x=X/box_width;
-        y=Y/box_height;
-}
-
-int pos :: get_x(){
-        return x;
-}
-int pos :: get_y(){
-        return y;
-}
-
 void swap(int x, int y, int t, int z){
-    //Candy* temp = grid[1*cols+0];
-    //grid[1*cols+0] = grid[0*cols+0];
-    //grid[0*cols+0] = temp;
     int pointx = x/box_width; 
     int pointy = y/box_height;
     if (abs(t-pointx)<=1 && abs(z-pointy)<=1){
@@ -201,14 +124,6 @@ void swap(int x, int y, int t, int z){
 
 
 
-// *****************************************************************************************************
-// No change zone ends here
-// *****************************************************************************************************
-
-
-
-// To Do zone: 
-
 bool ended = false;
 
 void initialize(){
@@ -216,28 +131,17 @@ void initialize(){
     int size = rows*cols;
     grid = new Candy*[size];// implement array creation
     for(int i = 0 ; i<size; i++){
-        int p = rand()%3;
+        int p = rand()%4;
         if (p==1){
             grid[i] = new blue();
         }else if(p==2){
             grid[i] = new Pink();
+        }else if(p==4){
+            grid[i] = new egg();
         }else{
             grid[i] = new Fish();
         }
     }
-    
-
-    /*
-    for(int i=0; i<rows; i++){
-        for(int j=0; j<cols; j++){
-            int p = rand()%3;
-        }
-    }
-    */
-
-    // generate two random numbers and store in ghostRow and ghostCol variables
-
-
 }
 
 

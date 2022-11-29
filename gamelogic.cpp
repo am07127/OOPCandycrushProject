@@ -1,5 +1,4 @@
-#include <iostream>
-#include "Candycrush.hpp"
+#include "gamelogic.hpp"
 
 
 void gamelogic :: operator++(){

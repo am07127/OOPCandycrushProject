@@ -1,34 +1,28 @@
 #include<SDL.h>
+#include <stdio.h>
+#include <string>
+#include <SDL_image.h>
+#include<SDL_mixer.h>
+#include "gamelogic.hpp"
+#include "pos.hpp"
+#include "sound.hpp"
+#pragma once
 
-//singleton design pattern implemented here
-class gamelogic{
-      private:
-         int score;
-         int moves;
-         static gamelogic* instance;
-         gamelogic(){
-            score=0;
-            moves=10;
-         };
-      public:
-         static gamelogic* getinstance(){
-            if(!instance){
-               instance = new gamelogic();
-               return instance;
-            }
-         }
 
-         void operator++();
+class Candy{
+    public:
+    SDL_Rect srcrect;
+    string type;
+    Candy(){
 
-         void operator--();
+    }
+        virtual void crush(){
+           srcrect={401,189,128,128};
+    }
+    ~Candy(){
 
-         int getscore();
-
-         int getmove();
-
-         ~gamelogic(){
-            
-         }
+    }
+    
 };
 
 
@@ -47,34 +41,7 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
 
 //int count=0;
 
-class pos{
-    public:
-       int x;
-       int y;
-    pos(){
-       x=0;
-       y=0;
-    };
-    void set_pos(int X,int Y);
 
-    int get_x();
 
-    int get_y();
 
-};
-
-/*
-class flag{
-   private:
-      bool value;
-   public:
-      flag(){};
-      void set_bool(bool x){
-         value = x;
-      }
-      bool get_value(){
-         return value;
-      }
-};
-*/
 

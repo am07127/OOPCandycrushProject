@@ -144,6 +144,7 @@ void Game::run( )
 			}else{
 				aya->makewindow(true);
 			}
+			delete aya;
 			break;
 		}
 		//Handle events on queue
@@ -188,5 +189,6 @@ void Game::run( )
         time_t timeTaken = end-start;        // Total time taken so Far.
         timeleft = timeleft - timeTaken;
 	}
-	
+	delete p1;
+	delete p2;
 }
