@@ -76,8 +76,8 @@ class Candy{
             }
         }
         */
-        void crush(){
-        srcrect={401,189,128,128};
+        virtual void crush(){
+           srcrect={401,189,128,128};
     }
     
 };
@@ -88,11 +88,11 @@ public:
         srcrect={-1,-1,128,128};
         type="blue";
     }
-    /*
+    
     void crush(){
-        srcrect={401,189,128,128};
+        srcrect={428,1,74,128};
     }
-    */
+    
 };
 
 class Pink:public Candy{
@@ -101,11 +101,11 @@ class Pink:public Candy{
         srcrect={201,189,128,128};
         type="pink";
     }
-    /*
+    
     void crush(){
-        srcrect={401,189,128,128};
+        srcrect={1,189,128,128};
     }
-    */
+    
 };
 class Fish:public Candy{
     public:
@@ -113,11 +113,11 @@ class Fish:public Candy{
         srcrect={401,377,128,128};
         type="fish";
     }
-    /*
+    
     void crush(){
-        srcrect={401,189,128,128};
+        srcrect={220,377,90,128};
     }
-    */
+    
 };
 
 class egg:public Candy{
@@ -126,11 +126,11 @@ class egg:public Candy{
         srcrect={201,1,128,128};
         type="egg";
     }
-    /*
+    
     void crush(){
-        srcrect={401,189,128,128};
+        srcrect={1,377,128,128};
     }
-    */
+    
 };
 
 // Currently rows and columns are set to 8, however your game implementation should work for any other number
@@ -353,6 +353,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                     ++(*count);
                 }
                }else if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-1)]->type){
+                grid[i*cols + j]->crush();
+                grid[i*cols + (j+1)]->crush();
+                grid[i*cols + (j-1)]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[i*cols + (j+1)] = createrandom();
                 grid[i*cols + (j-1)] = createrandom();
@@ -362,6 +369,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                 }
             }else if(j==0){
                 if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j+2)]->type){
+                grid[i*cols + j]->crush();
+                grid[i*cols + (j+1)]->crush();
+                grid[i*cols + (j+2)]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[i*cols + (j+1)] = createrandom();
                 grid[i*cols + (j+2)] = createrandom();
@@ -369,6 +383,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                     ++(*count);
                 }
                 }else if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+1)*cols+j]->type){
+                grid[i*cols + j]->crush();
+                grid[(i-1)*cols + j]->crush();
+                grid[(i+1)*cols + j]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[(i-1)*cols + j] = createrandom();
                 grid[(i+1)*cols + j] = createrandom();
@@ -378,6 +399,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                 }
             }else if(j==cols-1){
                 if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+1)*cols+j]->type){
+                grid[i*cols + j]->crush();
+                grid[(i-1)*cols + j]->crush();
+                grid[(i+1)*cols + j]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[(i-1)*cols + j] = createrandom();
                 grid[(i+1)*cols + j] = createrandom();
@@ -385,6 +413,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                     ++(*count);
                 }
                 }else if(grid[i*cols+j]->type == grid[i*cols+(j-1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-2)]->type){
+                grid[i*cols + j]->crush();
+                grid[i*cols + (j-1)]->crush();
+                grid[i*cols + (j-2)]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[i*cols + (j-1)] = createrandom();
                 grid[i*cols + (j-2)] = createrandom();
