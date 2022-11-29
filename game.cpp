@@ -134,7 +134,7 @@ void Game::run( )
 	gamelogic* p2 = p2->getinstance();
 	//flag* p2 = new flag();
 	time_t start = time(0);
-	int timeleft = 2000;
+	int timeleft = 6000;
 	while( !quit )
 	{
 		if(timeleft<0){

@@ -266,6 +266,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
         for(int j=0;j<cols; j++){
             if (i==0 && j==0){
                 if(grid[i*cols+j]->type == grid[(i+1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+2)*cols+j]->type){
+                grid[i*cols + j]->crush();
+                grid[(i+1)*cols + j]->crush();
+                grid[(i+2)*cols + j]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[(i+1)*cols + j] = createrandom();
                 grid[(i+2)*cols + j] = createrandom();
@@ -273,6 +280,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                     ++(*count);
                 }
                }else if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j+2)]->type){
+                grid[i*cols + j]->crush();
+                grid[i*cols + (j+1)]->crush();
+                grid[i*cols + (j+2)]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[i*cols + (j+1)] = createrandom();
                 grid[i*cols + (j+2)] = createrandom();
@@ -282,6 +296,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                }
             }else if(i==0 && j==cols-1){
                 if(grid[i*cols+j]->type == grid[(i+1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+2)*cols+j]->type){
+                grid[i*cols + j]->crush();
+                grid[(i+1)*cols + j]->crush();
+                grid[(i+2)*cols + j]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[(i+1)*cols + j] = createrandom();
                 grid[(i+2)*cols + j] = createrandom();
@@ -289,6 +310,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                     ++(*count);
                 }
                }else if(grid[i*cols+j]->type == grid[i*cols+(j-1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-2)]->type){
+                grid[i*cols + j]->crush();
+                grid[i*cols + (j-1)]->crush();
+                grid[i*cols + (j-2)]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[i*cols + (j-1)] = createrandom();
                 grid[i*cols + (j-2)] = createrandom();
@@ -298,6 +326,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                }
             }else if(i==rows-1 && j==0){
                 if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j+2)]->type){
+                grid[i*cols + j]->crush();
+                grid[i*cols + (j+1)]->crush();
+                grid[i*cols + (j+2)]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[i*cols + (j+1)] = createrandom();
                 grid[i*cols + (j+2)] = createrandom();
@@ -305,6 +340,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                    ++(*count);
                 }
                }else if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i-2)*cols+j]->type){
+                grid[i*cols + j]->crush();
+                grid[(i-1)*cols + j]->crush();
+                grid[(i-2)*cols + j]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[(i-1)*cols + j] = createrandom();
                 grid[(i-2)*cols + j] = createrandom();
@@ -314,6 +356,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                }
             }else if(i==rows-1 && j==cols-1){
                 if(grid[i*cols+j]->type == grid[i*cols+(j-1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-2)]->type){
+                grid[i*cols + j]->crush();
+                grid[i*cols + (j-1)]->crush();
+                grid[i*cols + (j-2)]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[i*cols + (j-1)] = createrandom();
                 grid[i*cols + (j-2)] = createrandom();
@@ -321,6 +370,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                     ++(*count);
                 }
                }else if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i-2)*cols+j]->type){
+                grid[i*cols + j]->crush();
+                grid[(i-1)*cols + j]->crush();
+                grid[(i-2)*cols + j]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[(i-1)*cols + j] = createrandom();
                 grid[(i-2)*cols + j] = createrandom();
@@ -330,6 +386,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                }
             }else if(i==0){
                 if(grid[i*cols+j]->type == grid[(i+1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+2)*cols+j]->type){
+                grid[i*cols + j]->crush();
+                grid[(i+1)*cols + j]->crush();
+                grid[(i+2)*cols + j]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[(i+1)*cols + j] = createrandom();
                 grid[(i+2)*cols + j] = createrandom();
@@ -337,6 +400,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                    ++(*count);
                 }
                 }else if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-1)]->type){
+                grid[i*cols + j]->crush();
+                grid[i*cols + (j+1)]->crush();
+                grid[i*cols + (j-1)]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[i*cols + (j+1)] = createrandom();
                 grid[i*cols + (j-1)] = createrandom();
@@ -346,6 +416,13 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                 }
             }else if(i==rows-1){
                 if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i-2)*cols+j]->type){
+                grid[i*cols + j]->crush();
+                grid[(i-1)*cols + j]->crush();
+                grid[(i-2)*cols + j]->crush();
+                SDL_RenderClear(gRenderer);
+                drawBlocks(gRenderer, assets);
+                SDL_RenderPresent(gRenderer);
+                SDL_Delay(200);
                 grid[i*cols + j] = createrandom();
                 grid[(i-1)*cols + j] = createrandom();
                 grid[(i-2)*cols + j] = createrandom();
