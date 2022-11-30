@@ -211,7 +211,7 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
 
         for (int j = 0; j < cols; j++) {                                   // for loop for each column of that row
             
-            if (i == 0 && j == 0) {                             // condition for the left corner
+            if (i == 0 && j == 0) {                             // condition for the top-left corner box
                 // the first IF condition checks for the column-wise 3 matches
                 if (grid[i*cols+j] -> type == grid[(i+1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+2)*cols+j]->type){
                     
@@ -253,7 +253,7 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                     }
                }
             }
-            else if (i == 0 && j == cols - 1) {             // condition for mid part of screen except right corner
+            else if (i == 0 && j == cols - 1) {             // condition for mid part of screen except right corner for the top row
 
                 if (grid[i*cols+j] -> type == grid[(i+1)*cols+j] -> type && grid[i*cols+j] -> type == grid[(i+2)*cols+j] -> type) {
                     // 3 matching candies in a single column
@@ -276,229 +276,321 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
                     }
                }
                else if (grid[i*cols+j]->type == grid[i*cols+(j-1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-2)]->type){
-                grid[i*cols + j]->crush();
-                grid[i*cols + (j-1)]->crush();
-                grid[i*cols + (j-2)]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[i*cols + (j-1)] = createrandom();
-                grid[i*cols + (j-2)] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
+                    // checking row-wise but from down to up
+                    
+                    grid[i*cols + j] -> crush();                // three candies are crushed
+                    grid[i*cols + (j-1)] -> crush();
+                    grid[i*cols + (j-2)] -> crush();
+                    
+                    SDL_RenderClear(gRenderer);                 // SDL functions used to draw the crush candies animation
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);                             // Delay for the animation to be visible on the screen
+                    
+                    grid[i*cols + j] = createrandom();          // candies randomly created and stored in the column
+                    grid[i*cols + (j-1)] = createrandom();
+                    grid[i*cols + (j-2)] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);                             // move incremented
+                    }
                }
-            }else if(i==rows-1 && j==0){
-                if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j+2)]->type){
-                grid[i*cols + j]->crush();
-                grid[i*cols + (j+1)]->crush();
-                grid[i*cols + (j+2)]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[i*cols + (j+1)] = createrandom();
-                grid[i*cols + (j+2)] = createrandom();
-                if(flag==true){
-                   ++(*count);
-                }
-               }else if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i-2)*cols+j]->type){
-                grid[i*cols + j]->crush();
-                grid[(i-1)*cols + j]->crush();
-                grid[(i-2)*cols + j]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[(i-1)*cols + j] = createrandom();
-                grid[(i-2)*cols + j] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
+            }
+            else if ( i == rows-1 && j == 0) {
+                // left bottom column check
+
+                if (grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j+2)]->type) {
+                // three candies match in the same row
+    
+                    grid[i*cols + j] -> crush();
+                    grid[i*cols + (j+1)] -> crush();
+                    grid[i*cols + (j+2)] -> crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[i*cols + (j+1)] = createrandom();
+                    grid[i*cols + (j+2)] = createrandom();
+                    
+                    if (flag == true) {
+                    ++(*count);                                         // move counted
+                    }
                }
-            }else if(i==rows-1 && j==cols-1){
-                if(grid[i*cols+j]->type == grid[i*cols+(j-1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-2)]->type){
-                grid[i*cols + j]->crush();
-                grid[i*cols + (j-1)]->crush();
-                grid[i*cols + (j-2)]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[i*cols + (j-1)] = createrandom();
-                grid[i*cols + (j-2)] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
-               }else if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i-2)*cols+j]->type){
-                grid[i*cols + j]->crush();
-                grid[(i-1)*cols + j]->crush();
-                grid[(i-2)*cols + j]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[(i-1)*cols + j] = createrandom();
-                grid[(i-2)*cols + j] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
+               else if (grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i-2)*cols+j]->type){
+                // three candies in the same column
+                
+                    grid[i*cols + j] -> crush();
+                    grid[(i-1)*cols + j] -> crush();
+                    grid[(i-2)*cols + j] -> crush();
+
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[(i-1)*cols + j] = createrandom();
+                    grid[(i-2)*cols + j] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count); 
+                    }
                }
-            }else if(i==0){
-                if(grid[i*cols+j]->type == grid[(i+1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+2)*cols+j]->type){
-                grid[i*cols + j]->crush();
-                grid[(i+1)*cols + j]->crush();
-                grid[(i+2)*cols + j]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[(i+1)*cols + j] = createrandom();
-                grid[(i+2)*cols + j] = createrandom();
-                if(flag==true){
-                   ++(*count);
+            }
+            else if (i == rows-1 && j == cols-1) {
+            // checking for right bottom corner
+                
+                if (grid[i*cols+j]->type == grid[i*cols+(j-1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-2)]->type){
+                // checking candies match in the same row
+
+                    grid[i*cols + j]->crush();
+                    grid[i*cols + (j-1)]->crush();
+                    grid[i*cols + (j-2)]->crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[i*cols + (j-1)] = createrandom();
+                    grid[i*cols + (j-2)] = createrandom();
+                    
+                    if(flag==true){
+                        ++(*count);
+                    }
+               }
+               else if (grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i-2)*cols+j]->type) {
+                // checking candies match in the same column
+
+                    grid[i*cols + j] -> crush();
+                    grid[(i-1)*cols + j] -> crush();
+                    grid[(i-2)*cols + j] -> crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[(i-1)*cols + j] = createrandom();
+                    grid[(i-2)*cols + j] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);
+                    }
+               }
+            }
+            else if (i == 0) {
+            // checking for other candies in the top row
+                
+                if (grid[i*cols+j]->type == grid[(i+1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+2)*cols+j]->type) {
+                // check if candies match in the same column
+                
+                    grid[i*cols + j]->crush();
+                    grid[(i+1)*cols + j]->crush();
+                    grid[(i+2)*cols + j]->crush();
+
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[(i+1)*cols + j] = createrandom();
+                    grid[(i+2)*cols + j] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);
+                    }
                 }
-                }else if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-1)]->type){
-                grid[i*cols + j]->crush();
-                grid[i*cols + (j+1)]->crush();
-                grid[i*cols + (j-1)]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[i*cols + (j+1)] = createrandom();
-                grid[i*cols + (j-1)] = createrandom();
-                if(flag==true){
-                    ++(*count);
+                else if (grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-1)]->type) {
+                // checking match row-wise
+                
+                    grid[i*cols + j] -> crush();
+                    grid[i*cols + (j+1)] -> crush();
+                    grid[i*cols + (j-1)] -> crush();
+
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+
+                    grid[i*cols + j] = createrandom();
+                    grid[i*cols + (j+1)] = createrandom();
+                    grid[i*cols + (j-1)] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);
+                    }
                 }
-                }
-            }else if(i==rows-1){
+            }
+            else if(i==rows-1){
+            // checking the candies in the bottom row except the corner ones
+                
                 if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i-2)*cols+j]->type){
-                grid[i*cols + j]->crush();
-                grid[(i-1)*cols + j]->crush();
-                grid[(i-2)*cols + j]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[(i-1)*cols + j] = createrandom();
-                grid[(i-2)*cols + j] = createrandom();
-                if(flag==true){
+                    
+                    grid[i*cols + j]->crush();
+                    grid[(i-1)*cols + j]->crush();
+                    grid[(i-2)*cols + j]->crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[(i-1)*cols + j] = createrandom();
+                    grid[(i-2)*cols + j] = createrandom();
+                    
+                    if(flag == true) {
+                        ++(*count);
+                    }
+               }
+               else if (grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-1)]->type) {
+                
+                    grid[i*cols + j] -> crush();
+                    grid[i*cols + (j+1)] -> crush();
+                    grid[i*cols + (j-1)] -> crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[i*cols + (j+1)] = createrandom();
+                    grid[i*cols + (j-1)] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);
+                    }
+                }
+            }
+            else if (j == 0){
+            // checking for first column except for top since they have already been checked
+
+                if (grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j+2)]->type) {
+                    
+                    grid[i*cols + j] -> crush();
+                    grid[i*cols + (j+1)] -> crush();
+                    grid[i*cols + (j+2)] -> crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[i*cols + (j+1)] = createrandom();
+                    grid[i*cols + (j+2)] = createrandom();
+                    
+                    if( flag== true) {
+                        ++(*count);
+                    }
+                }
+                else if (grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+1)*cols+j]->type) {
+                
+                    grid[i*cols + j] -> crush();
+                    grid[(i-1)*cols + j] -> crush();
+                    grid[(i+1)*cols + j] -> crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[(i-1)*cols + j] = createrandom();
+                    grid[(i+1)*cols + j] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);
+                    }
+                }
+            }
+            else if (j == cols-1) {
+                if (grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+1)*cols+j]->type) {
+                    
+                    grid[i*cols + j] -> crush();
+                    grid[(i-1)*cols + j] -> crush();
+                    grid[(i+1)*cols + j] -> crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[(i-1)*cols + j] = createrandom();
+                    grid[(i+1)*cols + j] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);
+                    }
+                }
+                else if (grid[i*cols+j]->type == grid[i*cols+(j-1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-2)]->type){
+                    
+                    grid[i*cols + j]->crush();
+                    grid[i*cols + (j-1)]->crush();
+                    grid[i*cols + (j-2)]->crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[i*cols + (j-1)] = createrandom();
+                    grid[i*cols + (j-2)] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);
+                    }
+                }
+            }
+            else{
+            // in the middle of the grid
+                if (grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+1)*cols+j]->type){
+                    
+                    grid[i*cols + j]->crush();
+                    grid[(i-1)*cols + j]->crush();
+                    grid[(i+1)*cols + j]->crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[(i-1)*cols + j] = createrandom();
+                    grid[(i+1)*cols + j] = createrandom();
+                    
+                    if (flag == true) {
                     ++(*count);
+                    }
                 }
-               }else if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-1)]->type){
-                grid[i*cols + j]->crush();
-                grid[i*cols + (j+1)]->crush();
-                grid[i*cols + (j-1)]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[i*cols + (j+1)] = createrandom();
-                grid[i*cols + (j-1)] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
-                }
-            }else if(j==0){
-                if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j+2)]->type){
-                grid[i*cols + j]->crush();
-                grid[i*cols + (j+1)]->crush();
-                grid[i*cols + (j+2)]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[i*cols + (j+1)] = createrandom();
-                grid[i*cols + (j+2)] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
-                }else if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+1)*cols+j]->type){
-                grid[i*cols + j]->crush();
-                grid[(i-1)*cols + j]->crush();
-                grid[(i+1)*cols + j]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[(i-1)*cols + j] = createrandom();
-                grid[(i+1)*cols + j] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
-                }
-            }else if(j==cols-1){
-                if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+1)*cols+j]->type){
-                grid[i*cols + j]->crush();
-                grid[(i-1)*cols + j]->crush();
-                grid[(i+1)*cols + j]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[(i-1)*cols + j] = createrandom();
-                grid[(i+1)*cols + j] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
-                }else if(grid[i*cols+j]->type == grid[i*cols+(j-1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-2)]->type){
-                grid[i*cols + j]->crush();
-                grid[i*cols + (j-1)]->crush();
-                grid[i*cols + (j-2)]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[i*cols + (j-1)] = createrandom();
-                grid[i*cols + (j-2)] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
-                }
-            }else{
-                if(grid[i*cols+j]->type == grid[(i-1)*cols+j]->type && grid[i*cols+j]->type == grid[(i+1)*cols+j]->type){
-                grid[i*cols + j]->crush();
-                grid[(i-1)*cols + j]->crush();
-                grid[(i+1)*cols + j]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[(i-1)*cols + j] = createrandom();
-                grid[(i+1)*cols + j] = createrandom();
-                if(flag==true){
-                   ++(*count);
-                }
-                }else if(grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-1)]->type){
-                grid[i*cols + j]->crush();
-                grid[i*cols + (j+1)]->crush();
-                grid[i*cols + (j-1)]->crush();
-                SDL_RenderClear(gRenderer);
-                drawBlocks(gRenderer, assets);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(200);
-                grid[i*cols + j] = createrandom();
-                grid[i*cols + (j+1)] = createrandom();
-                grid[i*cols + (j-1)] = createrandom();
-                if(flag==true){
-                    ++(*count);
-                }
+                else if (grid[i*cols+j]->type == grid[i*cols+(j+1)]->type && grid[i*cols+j]->type == grid[i*cols+(j-1)]->type){
+                    
+                    grid[i*cols + j]->crush();
+                    grid[i*cols + (j+1)]->crush();
+                    grid[i*cols + (j-1)]->crush();
+                    
+                    SDL_RenderClear(gRenderer);
+                    drawBlocks(gRenderer, assets);
+                    SDL_RenderPresent(gRenderer);
+                    SDL_Delay(200);
+                    
+                    grid[i*cols + j] = createrandom();
+                    grid[i*cols + (j+1)] = createrandom();
+                    grid[i*cols + (j-1)] = createrandom();
+                    
+                    if (flag == true) {
+                        ++(*count);
+                    }
                 }
             }
         }   
@@ -506,7 +598,7 @@ void match(bool& flag, gamelogic* count, SDL_Renderer* gRenderer, SDL_Texture* a
 }
 
 
-
+// memory management function that frees the memory
 void quitgrid(){
     for(int i=0;i<rows; i++){
         for(int j=0;j<cols; j++){
