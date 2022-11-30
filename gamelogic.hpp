@@ -6,18 +6,18 @@
 #pragma once
 
 //singleton design pattern implemented here
-class gamelogic{
+class gamelogic {
       private:
          int score;
          int moves;
-         static gamelogic* instance;
-         gamelogic(){
-            score=0;
-            moves=20;
+         static gamelogic* instance;   
+         gamelogic() {                     // private constructor
+            score = 0;
+            moves = 20;
          };
       public:
          static gamelogic* getinstance(){
-            if(!instance){
+            if (!instance) {
                instance = new gamelogic();
                return instance;
             }
@@ -31,7 +31,7 @@ class gamelogic{
 
          int getmove();
 
-         ~gamelogic(){
+         ~gamelogic() {  // destructor made
             
          }
 };

@@ -1,6 +1,6 @@
 #include "game.hpp"
-
-int main(int argc, char *argv[]){
+// taken from one of the homework assignments we had
+int main (int argc, char *argv[]) {
     Game game;
     srand(time(NULL));
     if( !game.init() ){

@@ -5,7 +5,7 @@
 
 bool flag=false;
 
-
+// this is purely taken and inspired from the homework files. There are some minor changes
 using namespace std;
 bool Game::init()
 {

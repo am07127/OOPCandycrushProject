@@ -9,14 +9,18 @@
 #include "sound.hpp"
 #pragma once
 using namespace std;
-class popupwindow{
+
+class popupwindow {
+
     sound* z = new sound();
+    
     public:
-    popupwindow(){
+        popupwindow() {         // constructor made   
+        }
         
-    }
-    int makewindow(bool x);
-    ~popupwindow(){
-        delete z;
-    }
+        int makewindow(bool x);
+        
+        ~popupwindow() {        // destructor made
+            delete z;
+        }
 };
